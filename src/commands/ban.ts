@@ -6,7 +6,6 @@ export default {
     description: 'Bans a user',
     
     slash: true,
-    testOnly: true,
 
     permissions: ['MANAGE_GUILD'],
 

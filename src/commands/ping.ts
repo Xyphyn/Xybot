@@ -5,7 +5,6 @@ export default {
     description: 'Replies with API ping',
 
     slash: true,
-    testOnly: true,
 
     callback: ({ interaction, client }) => {
         interaction.reply({
