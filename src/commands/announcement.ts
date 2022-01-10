@@ -5,6 +5,7 @@ export default {
     category: 'Utilities',
     description: 'Sends an announcement',
     slash: true,
+    testOnly: true,
     options: [
         {
             'name': 'title',

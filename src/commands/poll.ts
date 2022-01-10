@@ -6,6 +6,7 @@ export default {
     description: 'Creates a poll',
 
     slash: true,
+    testOnly: true,
 
     options: [
         {

@@ -6,6 +6,7 @@ export default {
     description: 'Sends an embed',
 
     slash: true,
+    testOnly: true,
 
     options: [
         {
