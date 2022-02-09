@@ -7,7 +7,7 @@ export default {
 
     slash: true,
     testOnly: true,
-    permissions: ["MODERATE_MEMBERS"],
+    permissions: ['ADMINISTRATOR'],
 
     options: [
         {
@@ -105,7 +105,6 @@ export default {
                     else if (value === 'option2') option2count++
                 }
                 click.deferUpdate()
-                optionsDict.set(click.user.id, click.customId)
             })
 
             embed.addField(msgInteraction.options.getString('option1')!, option1count.toString())
