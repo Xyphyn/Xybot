@@ -7,6 +7,7 @@ export default {
 
     slash: true,
     testOnly: true,
+    permissions: ["MODERATE_MEMBERS"],
 
     options: [
         {
@@ -45,7 +46,6 @@ export default {
         let row1
         const option1emoji = msgInteraction.options.getString('option1emoji')
         const option2emoji = msgInteraction.options.getString('option2emoji')
-        const title = msgInteraction.options.getString('title')
 
         let option1button = new MessageButton()
         option1button.setCustomId('option1')
@@ -96,7 +96,7 @@ export default {
 
         collector.on('collect', (i: Interaction) => {
             let embed = new MessageEmbed()
-            embed.setTitle(title!);
+            embed.setTitle(msgInteraction.options.getString('question')!);
             let option1count = 0
             let option2count = 0
             collector.collected.forEach((click) => {
@@ -113,7 +113,7 @@ export default {
 
             msgInteraction.editReply({
                 content: 'Poll',
-                embeds: [embed]
+                embeds: [embed],
             })
 
             collector.collected.clear()
