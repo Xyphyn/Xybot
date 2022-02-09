@@ -1,0 +1,1 @@
+sudo npm i discord.js dotenv typescript wokcommands
