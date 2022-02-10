@@ -38,6 +38,12 @@ export default {
             description: 'The emoji for the second option',
             required: false,
             type: Constants.ApplicationCommandOptionTypes.STRING
+        },
+        {
+            name: 'time',
+            description: 'The time in seconds.',
+            required: false,
+            type: Constants.ApplicationCommandOptionTypes.NUMBER
         }
     ],
 
@@ -45,6 +51,16 @@ export default {
         let row1
         const option1emoji = msgInteraction.options.getString('option1emoji')
         const option2emoji = msgInteraction.options.getString('option2emoji')
+
+        let _time: any
+        if (msgInteraction.options.getNumber('time') == undefined) _time = 30
+        else _time = msgInteraction.options.getNumber('time')!
+        if (_time! > 600 || _time! < 5) {
+            msgInteraction.reply({
+                content: "invalid time.",
+                ephemeral: true
+            })
+        }
 
         let option1button = new MessageButton()
         option1button.setCustomId('option1')
@@ -67,7 +83,7 @@ export default {
         let optionsDict = new Map()
 
         try {
-            const embed = new MessageEmbed().setTitle(msgInteraction.options.getString('question')!).setDescription('Ends in 30 seconds\nYou cannot change your answer after you click a button.')
+            const embed = new MessageEmbed().setTitle(msgInteraction.options.getString('question')!).setDescription(`Ends in ${_time} seconds\nYou cannot change your answer after you click a button.`)
             await msgInteraction.reply({
                 content: 'Poll',
                 embeds: [embed],
@@ -89,8 +105,8 @@ export default {
 
         const collector = channel.createMessageComponentCollector({
             filter,
-            max: 100,
-            time: 30000,
+            max: 1000,
+            time: _time! * 1000,
         })
 
         collector.on('collect', (i: Interaction) => {
