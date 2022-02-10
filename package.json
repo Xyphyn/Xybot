@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc -w --skipLibCheck",
-    "start": "ts-node src/index.ts"
+    "start": "tsc && node src/index.js"
   },
   "author": "Xylight",
   "license": "GPL-3.0",
