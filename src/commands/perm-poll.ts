@@ -1,4 +1,4 @@
-import { ButtonInteraction, Constants, Interaction, MessageActionRow, MessageButton, MessageEmbed, User } from "discord.js";
+import { ButtonInteraction, Constants, Interaction, MessageActionRow, MessageButton, MessageComponentInteraction, MessageEmbed, User } from "discord.js";
 import { ICommand } from "wokcommands";
 
 export default {
@@ -68,7 +68,7 @@ export default {
         let optionsDict = new Map()
 
         try {
-            const embed = new MessageEmbed().setTitle(msgInteraction.options.getString('question')!).setDescription('Ends in 30 seconds\nYou cannot change your answer after you click a button.')
+            const embed = new MessageEmbed().setTitle(msgInteraction.options.getString('question')!).setDescription('Choose wisely.')
             await msgInteraction.reply({
                 content: 'Poll',
                 embeds: [embed],
@@ -80,9 +80,11 @@ export default {
             return
         }
 
-        const filter = (btnInt: Interaction) => {
+        const filter = async (btnInt: MessageComponentInteraction) => {
             try {
-                return !(btnInt.user.id in optionsDict.values)
+                let message = await msgInteraction.fetchReply()
+                if(btnInt.message.id == message.id) return true
+                else return false
             } catch (TypeError) {
                 return true
             }
