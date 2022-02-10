@@ -44,11 +44,17 @@ export default {
                 ephemeral: true
             })
         } else {
-            const response = await member.timeout(time, reason!)
+            try {
+                const response = await member.timeout(time, reason!)
 
-            interaction.reply({
-                content: `Timed out \`${user.username}\`. Reason: **${reason}**`
-            })
+                interaction.reply({
+                    content: `Timed out \`${user.username}\`. Reason: **${reason}**`
+                })
+            } catch {
+                interaction.reply({
+                    content: "Failed to timeout. Maybe the user can't be timed out?"
+                })
+            }
         }
     }
 } as ICommand
