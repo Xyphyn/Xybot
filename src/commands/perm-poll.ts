@@ -99,7 +99,11 @@ export default {
             embed.setTitle(msgInteraction.options.getString('question')!);
             let option1count = 0
             let option2count = 0
+			
             collector.collected.forEach((click) => {
+                if (click.customId == option1button.customId) optionsDict.set(click.user.id, 'option1')
+                else optionsDict.set(click.user.id, 'option2')
+                
                 for (const [key, value] of optionsDict) {
                     if (value === 'option1') option1count++
                     else if (value === 'option2') option2count++
@@ -123,6 +127,7 @@ export default {
             embed.setTitle('Poll Results')
             let option1count = 0
             let option2count = 0
+
             for (const [key, value] of optionsDict) {
                 if (value === 'option1') option1count++
                 else if (value === 'option2') option2count++
