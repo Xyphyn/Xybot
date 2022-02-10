@@ -9,7 +9,7 @@ export default {
     slash: true,
     testOnly: true,
 
-    permissions: ['ADMINISTRATOR'],
+    permissions: ['MUTE_MEMBERS'],
 
     options: [
         {
