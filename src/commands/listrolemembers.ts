@@ -27,7 +27,7 @@ export default {
             arr += (`**${member}** `)
         }
         embed.setDescription(arr)
-        interaction.reply({
+        interaction.editReply({
             embeds: [embed]
         })
     }
