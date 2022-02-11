@@ -18,7 +18,6 @@ export default {
     ],
     
     callback: async ({ interaction }) => {
-        interaction.deferReply()
         const role = interaction.options.getRole('role')!
         let embed = new MessageEmbed().setTitle(`Users of ${role.name}`)
         const membersWithRole = interaction.guild?.roles.cache.get(role.id)?.members
