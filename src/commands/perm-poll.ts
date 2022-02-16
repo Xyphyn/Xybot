@@ -3,11 +3,10 @@ import { ICommand } from "wokcommands";
 
 export default {
     category: 'Games',
-    description: 'Creates a poll',
+    description: 'Creates a live poll',
 
     slash: true,
     testOnly: true,
-    permissions: ['ADMINISTRATOR'],
 
     options: [
         {
@@ -43,7 +42,7 @@ export default {
     ],
 
     callback: async ({ interaction: msgInteraction, client, channel }) => {
-        let row1
+        let row1: any
         const option1emoji = msgInteraction.options.getString('option1emoji')
         const option2emoji = msgInteraction.options.getString('option2emoji')
 
@@ -92,11 +91,12 @@ export default {
 
         const collector = channel.createMessageComponentCollector({
             filter,
-            max: 100,
             time: 604800000,
         })
 
         collector.on('collect', (i: Interaction) => {
+            
+
             let embed = new MessageEmbed()
             embed.setTitle(msgInteraction.options.getString('question')!);
             let option1count = 0
@@ -119,27 +119,15 @@ export default {
             msgInteraction.editReply({
                 content: 'Poll',
                 embeds: [embed],
+                components: [ row1 ]
             })
 
             collector.collected.clear()
         })
 
         collector.on('end', (collection, i: Interaction) => {
-            let embed = new MessageEmbed()
-            embed.setTitle('Poll Results')
-            let option1count = 0
-            let option2count = 0
-
-            for (const [key, value] of optionsDict) {
-                if (value === 'option1') option1count++
-                else if (value === 'option2') option2count++
-            }
-            embed.addField(msgInteraction.options.getString('option1')!, option1count.toString())
-            embed.addField(msgInteraction.options.getString('option2')!, option2count.toString())
-
             msgInteraction.editReply({
-                content: 'Poll',
-                embeds: [embed],
+                content: 'Poll ended. Something broke.',
                 components: []
             })
         })
