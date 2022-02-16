@@ -29,6 +29,12 @@ export default {
             description: 'Reason to timeout member.',
             required: false,
             type: Constants.ApplicationCommandOptionTypes.STRING
+        },
+        {
+            name: 'silent',
+            description: 'Whether to make it silent.',
+            required: false,
+            type: Constants.ApplicationCommandOptionTypes.BOOLEAN
         }
     ],
 
@@ -48,11 +54,13 @@ export default {
                 const response = await member.timeout(time, reason!)
 
                 interaction.reply({
-                    content: `Timed out \`${user.username}\`. Reason: **${reason}**`
+                    content: `Timed out \`${user.username}\`. Reason: **${reason}**`,
+                    ephemeral: interaction.options.getBoolean('silent')!
                 })
             } catch {
                 interaction.reply({
-                    content: "Failed to timeout. Maybe the user can't be timed out?"
+                    content: "Failed to timeout. Maybe the user can't be timed out?",
+                    ephemeral: interaction.options.getBoolean('silent')!
                 })
             }
         }
