@@ -2,6 +2,7 @@ import DiscordJS, { Intents } from 'discord.js'
 import dotenv from 'dotenv'
 import WOKCommands from 'wokcommands'
 import path from 'path'
+import fs from 'fs'
 
 dotenv.config()
 
@@ -16,7 +17,17 @@ const client = new DiscordJS.Client({
     ]
 })
 
-let api_keys = new Map();
+// let api_keys = new Map();
+const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+    const event = require(`./events/${file}`)
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args))
+    } else {
+        client.on(event.name, (...args) => event.execute(...args))
+    }
+}
 
 client.on('ready', () => {
     console.info('[DISCORD] Bot is ready');

@@ -1,5 +1,5 @@
 import { ICommand } from "wokcommands";
-import { Constants, MessageEmbed, Role } from "discord.js";
+import { Constants, GuildMember, MessageEmbed, Role } from "discord.js";
 
 export default {
     category: 'Utility',
@@ -18,13 +18,15 @@ export default {
     ],
     
     callback: async ({ interaction }) => {
-        const role = interaction.options.getRole('role')!
-        let embed = new MessageEmbed().setTitle(`Users of ${role.name}`)
-        const membersWithRole = interaction.guild?.roles.cache.get(role.id)?.members
+        const _role = interaction.options.getRole('role')!
+        let embed = new MessageEmbed().setTitle(`Users of role ${_role.name}`)
+        let role = interaction.guild?.roles.cache.get(_role.id)
         let arr = ""
-        for (let member in membersWithRole?.values) {
-            arr += (`**${member}** `)
-        }
+        console.log(role!.members)
+        role!.members.forEach(element => {
+            arr += element.user.username
+        });
+        console.log(arr);
         embed.setDescription(arr)
 
         interaction.reply({
