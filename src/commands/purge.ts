@@ -20,7 +20,12 @@ export default {
     ],
 
     callback: async ({ interaction, channel }) => {
-        channel.bulkDelete(interaction.options.getNumber('amount')!, true).catch(err => {
+        channel.bulkDelete(interaction.options.getNumber('amount')!, true).then(() => {
+            interaction.reply({
+                content: "Messages purged.",
+                ephemeral: true
+            })
+        }).catch(err => {
             interaction.reply({
                 content: "There was an error purging messages.",
                 ephemeral: true

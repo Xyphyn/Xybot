@@ -30,10 +30,8 @@ for (const file of eventFiles) {
 }
 
 client.on('ready', () => {
-    console.info('[DISCORD] Bot is ready');
-
     new WOKCommands(client, {
-        commandDir: path.join(__dirname, 'commands'),
+        commandsDir: path.join(__dirname, 'commands'),
         testServers: ['919378203208994876', '910590420604575765', '941415895635484742'],
     })
 })
