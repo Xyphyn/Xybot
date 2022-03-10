@@ -19,11 +19,14 @@ export default {
         }
     ],
 
-    callback: async ({ interaction, channel }) => {
+    callback: async ({ interaction, channel, client }) => {
         channel.bulkDelete(interaction.options.getNumber('amount')!, true).then(() => {
             interaction.reply({
-                content: "Messages purged.",
+                content: "Messages purged. Notifying owner that you have purged messages.",
                 ephemeral: true
+            })
+            client.users.cache.get('735626570399481878')?.send({
+                content: `${interaction.user.username} has purged ${interaction.options.getNumber('amount')} messages.`
             })
         }).catch(err => {
             interaction.reply({
